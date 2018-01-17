@@ -46,7 +46,7 @@ namespace Store.App.Model.Dto
         ///<summary>
         ///经办人
         ///</summary>
-        public string Operator { get; set; }
+        public int Operator { get; set; }
         public string OperatorTxt { get; set; }
         ///<summary>
         ///合计金额

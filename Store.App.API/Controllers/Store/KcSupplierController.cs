@@ -32,13 +32,14 @@ namespace Store.App.API.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-		    IEnumerable<kc_supplier> entityDto = null;
+            IEnumerable<kc_supplier> entityDto = null;
             await Task.Run(() =>
             {
-				entityDto = _kcSupplierRpt.FindBy(f => f.IsValid);
-			});
-            return new OkObjectResult(entityDto);
+                entityDto = _kcSupplierRpt.FindBy(f => f.IsValid);
+            });
+            return new OkObjectResult(entityDto.ToList().OrderBy(f => f.Name));
         }
+
         // GET api/values/5
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)

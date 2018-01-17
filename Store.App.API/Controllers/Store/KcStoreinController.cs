@@ -80,7 +80,7 @@ namespace Store.App.API.Controllers
 
             foreach (var store in storeinDtoList)
             {
-                store.OperatorTxt = sysUsers.FirstOrDefault(f => f.UserId == store.Operator)?.UserName;
+                store.OperatorTxt = sysUsers.FirstOrDefault(f => f.Id == store.Operator)?.UserName;
                 store.OrgIdTxt = sysOrgs.FirstOrDefault(f => f.Id == store.OrgId)?.DeptName;
                 store.StoreIdTxt = sysDics.FirstOrDefault(f => f.Id == store.StoreId)?.DicName;
                 store.SupplierIdTxt = kcSuppliers.FirstOrDefault(f => f.Id == store.SupplierId)?.Name;
@@ -182,7 +182,8 @@ namespace Store.App.API.Controllers
                                     IsValid = true,
                                     CreatedBy = storeIn.CreatedBy,
                                     OrgId = storeIn.OrgId,
-                                    GoodsSite = store.goodssite
+                                    GoodsSite = store.goodssite,
+                                    GoodsTypeId = store.GoodsTypeId
                                 };
                                 _kcStoreRpt.Add(kcstore);
                             }
