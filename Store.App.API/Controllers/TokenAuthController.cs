@@ -78,11 +78,11 @@ namespace Store.App.API.Controllers
         public IActionResult CheckSession()
         {
             var claimsIdentity = User.Identity as ClaimsIdentity;
-            return Json(new RequestResult
+            if (claimsIdentity == null)
             {
-                State = RequestState.Success,
-                Data = new { UserName = claimsIdentity.Name }
-            });
+                return new NoContentResult();
+            }
+            return new OkObjectResult(new { data = claimsIdentity.Name });
         }
     }
 }

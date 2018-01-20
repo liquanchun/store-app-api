@@ -70,6 +70,7 @@ namespace Store.App.API
             services.AddScoped<ICwInvoiceRepository, CwInvoiceRepository>();
             services.AddScoped<ICwPreauthRepository, CwPreauthRepository>();
             services.AddScoped<ICwPrefeeRepository, CwPrefeeRepository>();
+            services.AddScoped<IKcStoreoutlistRepository, KcStoreoutlistRepository>();
 
         }
     }

@@ -70,7 +70,7 @@ namespace Store.App.Data
         public DbSet<yx_customer> YxCustomers { get; set; }
 
         public DbSet<kc_storeinlist> KcStoreinlists { get; set; }
-
+        public DbSet<kc_storeoutlist> KcStoreoutlists { get; set; }
         public DbSet<cw_cusaccount> CwCusaccounts { get; set; }
         public DbSet<cw_invoice> CwInvoices { get; set; }
         public DbSet<cw_preauth> CwPreauths { get; set; }
