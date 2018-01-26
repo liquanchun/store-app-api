@@ -58,7 +58,7 @@ namespace Store.App.API.Controllers
             IEnumerable<kc_storeoutlist> entityDetailDto = null;
             await Task.Run(() =>
             {
-                entityDto = _kcStoreoutRpt.FindBy(f => f.IsValid);
+                entityDto = _kcStoreoutRpt.FindBy(f => f.IsValid).OrderByDescending(f=> f.CreatedAt);
                 entityDetailDto = _kcStoreoutlistRpt.GetAll();
             });
             var storeoutDtoList = _mapper.Map<IEnumerable<kc_storeout>, IEnumerable<StoreOutGridDto>>(entityDto).ToList();
