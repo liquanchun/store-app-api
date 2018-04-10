@@ -7,10 +7,12 @@ namespace Store.App.Model.Store
       ///
       ///</summary>
       public int Id { get; set; }
+
+      public string BatchNo { get; set; }
       ///<summary>
       ///仓库
       ///</summary>
-      public int StoreId { get; set; }
+        public int StoreId { get; set; }
       ///<summary>
       ///商品ID
       ///</summary>

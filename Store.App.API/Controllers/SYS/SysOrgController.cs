@@ -62,7 +62,7 @@ namespace Store.App.API.Controllers
             value.UpdatedAt = DateTime.Now;
             if (User.Identity is ClaimsIdentity identity)
             {
-                value.CreatedBy = identity.Name ?? "test";
+                value.CreatedBy = identity.Name ?? "admin";
             }
             value.IsValid = true;
             _sysOrgRpt.Add(value);

@@ -50,7 +50,7 @@ namespace Store.App.API.Controllers
 			value.IsValid = true;
             if(User.Identity is ClaimsIdentity identity)
             {
-                value.CreatedBy = identity.Name ?? "test";
+                value.CreatedBy = identity.Name ?? "admin";
             }
             _cwPreauthRpt.Add(value);
             _cwPreauthRpt.Commit();
@@ -69,7 +69,7 @@ namespace Store.App.API.Controllers
 			//更新字段内容
 			if(User.Identity is ClaimsIdentity identity)
 			{
-				single.CreatedBy = identity.Name ?? "test";
+				single.CreatedBy = identity.Name ?? "admin";
 			}
             _cwPreauthRpt.Commit();
             return new NoContentResult();

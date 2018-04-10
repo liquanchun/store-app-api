@@ -40,7 +40,7 @@ namespace Store.App.API.Controllers
         {
             if (User.Identity is ClaimsIdentity identity)
             {
-                return identity.Name ?? "test";
+                return identity.Name ?? "admin";
             }
             return "no";
         }

@@ -123,7 +123,7 @@ namespace Store.App.API.Controllers
                     value.IsDelete = false;
                     if (User.Identity is ClaimsIdentity identity)
                     {
-                        value.CreatedBy = identity.Name ?? "test";
+                        value.CreatedBy = identity.Name ?? "admin";
                     }
                     _sysUserRpt.Add(value);
                     _sysUserRpt.Commit();

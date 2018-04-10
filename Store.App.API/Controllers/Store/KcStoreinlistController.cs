@@ -8,11 +8,15 @@ using Store.App.Model.Store;
 using Store.App.API.Core;
 using AutoMapper;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Store.App.API.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class KcStoreinlistController : Controller
     {
 		private readonly IMapper _mapper;

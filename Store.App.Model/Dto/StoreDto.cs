@@ -16,11 +16,16 @@ namespace Store.App.Model.Dto
         public int StoreId { get; set; }
 
         public string StoreIdTxt { get; set; }
+        public string BatchNo { get; set; }
         ///<summary>
         ///商品ID
         ///</summary>
         public int GoodsId { get; set; }
         public string GoodsIdTxt { get; set; }
+
+        public string GoodsCode { get; set; }
+
+        public string GoodsNo { get; set; }
 
         public int GoodsTypeId { get; set; }
         public string GoodsTypeIdTxt { get; set; }

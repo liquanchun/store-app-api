@@ -109,7 +109,7 @@ namespace Store.App.API.Controllers
             order.IsValid = true;
             if (User.Identity is ClaimsIdentity identity)
             {
-                createBy = identity.Name ?? "test";
+                createBy = identity.Name ?? "admin";
             }
             order.CreatedBy = createBy;
             order.Status = "未结账";
@@ -233,7 +233,7 @@ namespace Store.App.API.Controllers
 			single.UpdatedAt = DateTime.Now;
 			if(User.Identity is ClaimsIdentity identity)
 			{
-			    single.CreatedBy = identity.Name ?? "test";
+			    single.CreatedBy = identity.Name ?? "admin";
 			}
             _yxOrderRpt.Commit();
             return new NoContentResult();
@@ -251,7 +251,7 @@ namespace Store.App.API.Controllers
             string createBy = string.Empty;
             if (User.Identity is ClaimsIdentity identity)
             {
-                createBy = identity.Name ?? "test";
+                createBy = identity.Name ?? "admin";
             }
 
             single.Status = "已取消";

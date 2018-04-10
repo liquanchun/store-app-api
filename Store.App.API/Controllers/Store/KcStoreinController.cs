@@ -20,7 +20,7 @@ using NLog;
 namespace Store.App.API.Controllers
 {
     [Route("api/[controller]")]
-    //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class KcStoreinController : Controller
     {
 		private readonly IMapper _mapper;
@@ -155,7 +155,7 @@ namespace Store.App.API.Controllers
             single.UpdatedAt = DateTime.Now;
             if (User.Identity is ClaimsIdentity identity)
             {
-                single.CreatedBy = identity.Name ?? "test";
+                single.CreatedBy = identity.Name ?? "admin";
             }
             using (var tran = _context.Database.BeginTransaction())
             {
@@ -201,7 +201,7 @@ namespace Store.App.API.Controllers
                 storeIn.Status = "正常";
                 if (User.Identity is ClaimsIdentity identity)
                 {
-                    storeIn.CreatedBy = identity.Name ?? "test";
+                    storeIn.CreatedBy = identity.Name ?? "admin";
                 }
                 //storeIn.OrderNo = GetOrderNo();
                 using (var tran = _context.Database.BeginTransaction())
@@ -220,7 +220,7 @@ namespace Store.App.API.Controllers
 
                             //更新库存(仓库，货位，产品)
                             var kucun = _kcStoreRpt.GetSingle(f =>
-                                f.GoodsId == store.GoodsId && f.StoreId == storeIn.StoreId);
+                                f.GoodsId == store.GoodsId && f.StoreId == storeIn.StoreId && f.BatchNo == store.batchno);
                             if (kucun == null)
                             {
                                 var kcstore = new kc_store
@@ -235,7 +235,8 @@ namespace Store.App.API.Controllers
                                     CreatedBy = storeIn.CreatedBy,
                                     OrgId = storeIn.OrgId,
                                     GoodsSite = store.goodssite,
-                                    GoodsTypeId = store.GoodsTypeId
+                                    GoodsTypeId = store.GoodsTypeId,
+                                    BatchNo = store.batchno
                                 };
                                 _kcStoreRpt.Add(kcstore);
                             }
@@ -272,7 +273,7 @@ namespace Store.App.API.Controllers
             single.UpdatedAt = DateTime.Now;
             if(User.Identity is ClaimsIdentity identity)
             {
-                single.CreatedBy = identity.Name ?? "test";
+                single.CreatedBy = identity.Name ?? "admin";
             }
             _kcStoreinRpt.Commit();
             return new NoContentResult();

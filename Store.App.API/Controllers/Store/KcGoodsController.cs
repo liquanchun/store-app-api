@@ -60,12 +60,18 @@ namespace Store.App.API.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody]kc_goods value)
         {
+            var oldSysUser = _kcGoodsRpt.FindBy(f => f.GoodsNo == value.GoodsNo);
+            if (oldSysUser.Any())
+            {
+                return BadRequest(string.Concat(value.GoodsNo, "已经存在。"));
+            }
+
             value.CreatedAt = DateTime.Now;
 			value.UpdatedAt = DateTime.Now;
             value.IsValid = true;
             if(User.Identity is ClaimsIdentity identity)
             {
-                value.CreatedBy = identity.Name ?? "test";
+                value.CreatedBy = identity.Name ?? "admin";
             }
             _kcGoodsRpt.Add(value);
             _kcGoodsRpt.Commit();
@@ -86,7 +92,7 @@ namespace Store.App.API.Controllers
             single.UpdatedAt = DateTime.Now;
             if(User.Identity is ClaimsIdentity identity)
             {
-                single.CreatedBy = identity.Name ?? "test";
+                single.CreatedBy = identity.Name ?? "admin";
             }
             _kcGoodsRpt.Commit();
             return new NoContentResult();

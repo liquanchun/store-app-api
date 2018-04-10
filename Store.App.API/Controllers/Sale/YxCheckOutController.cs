@@ -112,7 +112,7 @@ namespace Store.App.API.Controllers
             string createBy = string.Empty;
             if (User.Identity is ClaimsIdentity identity)
             {
-                createBy = identity.Name ?? "test";
+                createBy = identity.Name ?? "admin";
             }
             value.CreatedBy = createBy;
 
@@ -176,7 +176,7 @@ namespace Store.App.API.Controllers
 			single.UpdatedAt = DateTime.Now;
 			if(User.Identity is ClaimsIdentity identity)
 			{
-			    single.CreatedBy = identity.Name ?? "test";
+			    single.CreatedBy = identity.Name ?? "admin";
 			}
             _yxOrderRpt.Commit();
             return new NoContentResult();
@@ -194,7 +194,7 @@ namespace Store.App.API.Controllers
             string createBy = string.Empty;
             if (User.Identity is ClaimsIdentity identity)
             {
-                createBy = identity.Name ?? "test";
+                createBy = identity.Name ?? "admin";
             }
 
             single.Status = "已取消";

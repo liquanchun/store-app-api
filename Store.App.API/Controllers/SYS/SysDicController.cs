@@ -47,7 +47,7 @@ namespace Store.App.API.Controllers
             value.CreatedAt = DateTime.Now;
             if (User.Identity is ClaimsIdentity identity)
             {
-                value.CreatedBy = identity.Name ?? "test";
+                value.CreatedBy = identity.Name ?? "admin";
             }
             value.IndexNo = 1;
             value.IsValid = true;

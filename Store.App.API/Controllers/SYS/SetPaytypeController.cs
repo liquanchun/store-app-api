@@ -55,7 +55,7 @@ namespace Store.App.API.Controllers
             entityDto.IsValid = true;
             if(User.Identity is ClaimsIdentity identity)
             {
-                entityDto.CreatedBy = identity.Name ?? "test";
+                entityDto.CreatedBy = identity.Name ?? "admin";
             }
             _setPaytypeRpt.Add(entityDto);
             _setPaytypeRpt.Commit();
@@ -76,7 +76,7 @@ namespace Store.App.API.Controllers
             single.UpdatedAt = DateTime.Now;
             if(User.Identity is ClaimsIdentity identity)
             {
-                single.CreatedBy = identity.Name ?? "test";
+                single.CreatedBy = identity.Name ?? "admin";
             }
             _setPaytypeRpt.Commit();
             return new NoContentResult();

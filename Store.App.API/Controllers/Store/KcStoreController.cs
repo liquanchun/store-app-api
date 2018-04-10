@@ -62,6 +62,8 @@ namespace Store.App.API.Controllers
                 store.GoodsTypeIdTxt = sysDics.FirstOrDefault(f => f.Id == store.GoodsTypeId)?.DicName;
                 store.StoreIdTxt = sysDics.FirstOrDefault(f => f.Id == store.StoreId)?.DicName;
                 store.GoodsIdTxt = kcGoodses.FirstOrDefault(f => f.Id == store.GoodsId)?.Name;
+                store.GoodsCode = kcGoodses.FirstOrDefault(f => f.Id == store.GoodsId)?.GoodsCode;
+                store.GoodsNo = kcGoodses.FirstOrDefault(f => f.Id == store.GoodsId)?.GoodsNo;
                 store.OrgTxt = sysOrgs.FirstOrDefault(f => f.Id == store.OrgId)?.DeptName;
             }
             return new OkObjectResult(storeDtoList);
@@ -83,7 +85,7 @@ namespace Store.App.API.Controllers
             value.IsValid = true;
             if(User.Identity is ClaimsIdentity identity)
             {
-                value.CreatedBy = identity.Name ?? "test";
+                value.CreatedBy = identity.Name ?? "admin";
             }
             _kcStoreRpt.Add(value);
             _kcStoreRpt.Commit();
@@ -103,7 +105,7 @@ namespace Store.App.API.Controllers
             single.UpdatedAt = DateTime.Now;
             if(User.Identity is ClaimsIdentity identity)
             {
-                single.CreatedBy = identity.Name ?? "test";
+                single.CreatedBy = identity.Name ?? "admin";
             }
             _kcStoreRpt.Commit();
             return new NoContentResult();

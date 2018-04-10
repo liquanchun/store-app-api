@@ -51,7 +51,7 @@ namespace Store.App.API.Controllers
             value.IsValid = true;
             if(User.Identity is ClaimsIdentity identity)
             {
-                value.CreatedBy = identity.Name ?? "test";
+                value.CreatedBy = identity.Name ?? "admin";
             }
             _setHouseTypeRpt.Add(value);
             _setHouseTypeRpt.Commit();
@@ -78,7 +78,7 @@ namespace Store.App.API.Controllers
             single.TypeName = value.TypeName;
             if(User.Identity is ClaimsIdentity identity)
             {
-                single.CreatedBy = identity.Name ?? "test";
+                single.CreatedBy = identity.Name ?? "admin";
             }
             _setHouseTypeRpt.Commit();
             return new NoContentResult();

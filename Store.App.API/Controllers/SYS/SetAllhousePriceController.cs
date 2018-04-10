@@ -62,7 +62,7 @@ namespace Store.App.API.Controllers
             value.IsValid = true;
             if(User.Identity is ClaimsIdentity identity)
             {
-                value.CreatedBy = identity.Name ?? "test";
+                value.CreatedBy = identity.Name ?? "admin";
             }
             _setAllhousePriceRpt.Add(value);
             _setAllhousePriceRpt.Commit();
@@ -83,7 +83,7 @@ namespace Store.App.API.Controllers
             single.UpdatedAt = DateTime.Now;
             if(User.Identity is ClaimsIdentity identity)
             {
-                single.CreatedBy = identity.Name ?? "test";
+                single.CreatedBy = identity.Name ?? "admin";
             }
             _setAllhousePriceRpt.Commit();
             return new NoContentResult();

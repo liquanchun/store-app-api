@@ -53,7 +53,7 @@ namespace Store.App.API.Controllers
             value.IsValid = true;
             if(User.Identity is ClaimsIdentity identity)
             {
-                value.CreatedBy = identity.Name ?? "test";
+                value.CreatedBy = identity.Name ?? "admin";
             }
             _fwCusgoodsRpt.Add(value);
             _fwCusgoodsRpt.Commit();
@@ -76,12 +76,12 @@ namespace Store.App.API.Controllers
             {
                 if (!string.IsNullOrEmpty(value.TakeBy))
                 {
-                    single.TakeBy = identity.Name ?? "test";
+                    single.TakeBy = identity.Name ?? "admin";
                     single.TakeTime = DateTime.Now;
                 }
                 else
                 {
-                    single.CreatedBy = identity.Name ?? "test";
+                    single.CreatedBy = identity.Name ?? "admin";
                 }
             }
             _fwCusgoodsRpt.Commit();

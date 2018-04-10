@@ -90,7 +90,7 @@ namespace Store.App.API.Controllers
             string createBy = string.Empty;
             if (User.Identity is ClaimsIdentity identity)
             {
-                createBy = identity.Name ?? "test";
+                createBy = identity.Name ?? "admin";
             }
             value.CreatedBy = createBy;
             value.IsValid = true;
@@ -150,7 +150,7 @@ namespace Store.App.API.Controllers
             value.IsValid = true;
             if(User.Identity is ClaimsIdentity identity)
             {
-                value.CreatedBy = identity.Name ?? "test";
+                value.CreatedBy = identity.Name ?? "admin";
             }
             if (_fwHouseinfoRpt.Exist(f => f.Code == value.Code))
             {
@@ -175,7 +175,7 @@ namespace Store.App.API.Controllers
             single.UpdatedAt = DateTime.Now;
             if(User.Identity is ClaimsIdentity identity)
             {
-                single.CreatedBy = identity.Name ?? "test";
+                single.CreatedBy = identity.Name ?? "admin";
             }
             _fwHouseinfoRpt.Commit();
             return new NoContentResult();

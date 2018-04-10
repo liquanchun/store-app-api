@@ -8,11 +8,15 @@ using Store.App.Model.Store;
 using Store.App.API.Core;
 using AutoMapper;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Store.App.API.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class KcAdddelController : Controller
     {
 		private readonly IMapper _mapper;
@@ -51,7 +55,7 @@ namespace Store.App.API.Controllers
             value.IsValid = true;
             if(User.Identity is ClaimsIdentity identity)
             {
-                value.CreatedBy = identity.Name ?? "test";
+                value.CreatedBy = identity.Name ?? "admin";
             }
             _kcAdddelRpt.Add(value);
             _kcAdddelRpt.Commit();
@@ -73,7 +77,7 @@ namespace Store.App.API.Controllers
 				single.UpdatedAt = DateTime.Now;
                 if(User.Identity is ClaimsIdentity identity)
 				{
-				    single.CreatedBy = identity.Name ?? "test";
+				    single.CreatedBy = identity.Name ?? "admin";
 				}
                 _kcAdddelRpt.Commit();
             }

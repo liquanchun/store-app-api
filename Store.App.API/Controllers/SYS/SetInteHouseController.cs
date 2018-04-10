@@ -74,7 +74,7 @@ namespace Store.App.API.Controllers
             value.IsValid = true;
             if(User.Identity is ClaimsIdentity identity)
             {
-                value.CreatedBy = identity.Name ?? "test";
+                value.CreatedBy = identity.Name ?? "admin";
             }
             _setInteHouseRpt.Add(value);
             _setInteHouseRpt.Commit();
@@ -102,7 +102,7 @@ namespace Store.App.API.Controllers
             single.UseWeeks = value.UseWeeks;
             if(User.Identity is ClaimsIdentity identity)
             {
-                single.CreatedBy = identity.Name ?? "test";
+                single.CreatedBy = identity.Name ?? "admin";
             }
             _setInteHouseRpt.Commit();
             return new NoContentResult();

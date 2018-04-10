@@ -53,7 +53,7 @@ namespace Store.App.API.Controllers
             entityDto.IsRecharge = value.InCome == "是";
             if(User.Identity is ClaimsIdentity identity)
             {
-                entityDto.CreatedBy = identity.Name ?? "test";
+                entityDto.CreatedBy = identity.Name ?? "admin";
             }
             _setCardRpt.Add(entityDto);
             _setCardRpt.Commit();
@@ -78,7 +78,7 @@ namespace Store.App.API.Controllers
             single.CardFee = value.CardFee;
             if(User.Identity is ClaimsIdentity identity)
             {
-                single.CreatedBy = identity.Name ?? "test";
+                single.CreatedBy = identity.Name ?? "admin";
             }
             _setCardRpt.Commit();
             return new NoContentResult();

@@ -59,7 +59,7 @@ namespace Store.App.API.Controllers
             value.IsValid = true;
             if(User.Identity is ClaimsIdentity identity)
             {
-                value.CreatedBy = identity.Name ?? "test";
+                value.CreatedBy = identity.Name ?? "admin";
             }
             _setIntegralRpt.Add(value);
             _setIntegralRpt.Commit();
@@ -87,7 +87,7 @@ namespace Store.App.API.Controllers
             single.StartDate = value.StartDate;
             if(User.Identity is ClaimsIdentity identity)
             {
-                single.CreatedBy = identity.Name ?? "test";
+                single.CreatedBy = identity.Name ?? "admin";
             }
             _setIntegralRpt.Commit();
             return new NoContentResult();

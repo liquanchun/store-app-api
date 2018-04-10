@@ -20,7 +20,7 @@ using NLog;
 namespace Store.App.API.Controllers
 {
     [Route("api/[controller]")]
-    //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class KcStoreoutController : Controller
     {
         private readonly IMapper _mapper;
@@ -149,7 +149,7 @@ namespace Store.App.API.Controllers
             single.UpdatedAt = DateTime.Now;
             if (User.Identity is ClaimsIdentity identity)
             {
-                single.CreatedBy = identity.Name ?? "test";
+                single.CreatedBy = identity.Name ?? "admin";
             }
             using (var tran = _context.Database.BeginTransaction())
             {
@@ -159,7 +159,7 @@ namespace Store.App.API.Controllers
                     foreach (var store in storeList)
                     {
                         var kucun = _kcStoreRpt.GetSingle(f =>
-                            f.GoodsId == store.GoodsId && f.StoreId == single.StoreId);
+                            f.GoodsId == store.GoodsId && f.StoreId == single.StoreId && f.BatchNo == store.batchno);
                         if (kucun != null)
                         {
                             kucun.Amount = kucun.Amount + store.amount;
@@ -195,7 +195,7 @@ namespace Store.App.API.Controllers
                 storeOut.Status = "正常";
                 if (User.Identity is ClaimsIdentity identity)
                 {
-                    storeOut.CreatedBy = identity.Name ?? "test";
+                    storeOut.CreatedBy = identity.Name ?? "admin";
                 }
                 //storeOut.OrderNo = GetOrderNo();
                 using (var tran = _context.Database.BeginTransaction())
@@ -214,7 +214,7 @@ namespace Store.App.API.Controllers
 
                             //更新库存(仓库，货位，产品)
                             var kucun = _kcStoreRpt.GetSingle(f =>
-                                f.GoodsId == store.GoodsId && f.StoreId == storeOut.StoreId);
+                                f.GoodsId == store.GoodsId && f.StoreId == storeOut.StoreId && f.BatchNo == store.batchno);
                             if (kucun != null)
                             {
                                 kucun.Amount = kucun.Amount - store.amount;
@@ -248,7 +248,7 @@ namespace Store.App.API.Controllers
             single.UpdatedAt = DateTime.Now;
             if (User.Identity is ClaimsIdentity identity)
             {
-                single.CreatedBy = identity.Name ?? "test";
+                single.CreatedBy = identity.Name ?? "admin";
             }
             _kcStoreoutRpt.Commit();
             return new NoContentResult();
