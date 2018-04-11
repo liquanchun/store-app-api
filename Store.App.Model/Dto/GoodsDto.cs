@@ -60,5 +60,7 @@ namespace Store.App.Model.Store
        public string GoodsCode { get; set; }
 
        public string GoodsNo { get; set; }
+
+       public string ImageName { get; set; }
     }
 }

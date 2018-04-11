@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -10,6 +11,7 @@ using AutoMapper;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Store.App.API.Common;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -23,9 +25,12 @@ namespace Store.App.API.Controllers
 		private readonly IMapper _mapper;
         private IKcGoodsRepository _kcGoodsRpt;
         private readonly ISysDicRepository _sysDicRpt;
+        private readonly IHostingEnvironment _hostingEnvironment;
         public KcGoodsController(IKcGoodsRepository kcGoodsRpt, ISysDicRepository sysDicRpt,
+            IHostingEnvironment hostingEnvironment,
         IMapper mapper)
         {
+            _hostingEnvironment = hostingEnvironment;
             _kcGoodsRpt = kcGoodsRpt;
             _sysDicRpt = sysDicRpt;
             _mapper = mapper;
@@ -55,7 +60,29 @@ namespace Store.App.API.Controllers
             var single = _kcGoodsRpt.GetSingle(id);
             return new OkObjectResult(single);
         }
-
+        [HttpPost("upload")]
+        public async Task<IActionResult> PostFile()
+        {
+            //Read all files from angularjs FormData post request
+            var files = Request.Form.Files;
+            long size = files.Sum(f => f.Length);
+            // full path to file in temp location
+            string contentRootPath = _hostingEnvironment.ContentRootPath + "\\Files\\";
+            var filePath = Path.GetTempFileName();
+            foreach (var formFile in files)
+            {
+                var filename = formFile.FileName.Trim('\"');
+                filePath = contentRootPath + filename;
+                if (formFile.Length > 0)
+                {
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await formFile.CopyToAsync(stream);
+                    }
+                }
+            }
+            return new OkResult();
+        }
         // POST api/values
         [HttpPost]
         public async Task<IActionResult> Post([FromBody]kc_goods value)

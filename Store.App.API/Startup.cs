@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
@@ -19,6 +20,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Rest.Serialization;
 using Newtonsoft.Json;
@@ -114,7 +116,6 @@ namespace Store.App.API
             ////add NLog.Web
             app.AddNLogWeb();
 
-            app.UseStaticFiles();
             app.UseFileServer();
             // Add MVC to the request pipeline.
             app.UseCors(builder =>
@@ -156,6 +157,13 @@ namespace Store.App.API
 
                 // Uncomment the following line to add a route for porting Web API 2 controllers.
                 //routes.MapWebApiRoute("DefaultApi", "api/{controller}/{id?}");
+            });
+
+            app.UseStaticFiles(new StaticFileOptions()
+            {
+                FileProvider = new PhysicalFileProvider(
+                    Path.Combine(Directory.GetCurrentDirectory(), @"Files")),
+                RequestPath = new PathString("/Files")
             });
         }
     }
