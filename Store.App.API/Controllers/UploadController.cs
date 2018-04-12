@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Store.App.Data.Abstract;
@@ -30,24 +32,24 @@ namespace Store.App.API.Controllers
         }
 
         [Route("api/uploads")]
-        public IActionResult PostUpload()
+        public async Task<IActionResult> PostUpload()
         {
-            var myHttpPostedFile = Request.Form.Files[0];
+            var file = Request.Form.Files[0];
             string sPath = _hostingEnvironment.ContentRootPath + "\\Files\\";
             if (!Directory.Exists(sPath))
             {
                 Directory.CreateDirectory(sPath);
             }
-            string filePath = sPath + myHttpPostedFile.FileName;
+            string filePath = sPath + file.FileName;
             if (System.IO.File.Exists(filePath))
             {
                 System.IO.File.Delete(filePath);
             }
             using (var stream = new FileStream(filePath, FileMode.Create))
             {
-                myHttpPostedFile.CopyTo(stream);
+                await file.CopyToAsync(stream);
             }
-            string sReturn = myHttpPostedFile.FileName;
+            string sReturn = file.FileName;
             return Ok(sReturn); //³É¹¦
         }
     }

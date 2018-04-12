@@ -103,6 +103,10 @@ namespace Store.App.API
                     opts.SerializerSettings.DateParseHandling = DateParseHandling.None;
                 });
 
+            services.AddSingleton<IFileProvider>(
+                new PhysicalFileProvider(
+                    Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")));
+
             services.AddAutoMapper();
         }
 

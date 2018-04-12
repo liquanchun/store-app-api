@@ -1,13 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.10
+VisualStudioVersion = 15.0.27004.2005
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Store.App.API2", "Store.App.API\Store.App.API.csproj", "{020FFB8A-D140-434D-AB6A-4E69DFEDFD60}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Store.App.API", "Store.App.API\Store.App.API.csproj", "{020FFB8A-D140-434D-AB6A-4E69DFEDFD60}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Store.App.Data", "Store.App.Data\Store.App.Data.csproj", "{71731A96-FDE0-4F48-8D17-29576D5FED81}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Store.App.Data", "Store.App.Data\Store.App.Data.csproj", "{71731A96-FDE0-4F48-8D17-29576D5FED81}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Store.App.Model", "Store.App.Model\Store.App.Model.csproj", "{D1C419DE-E4A4-4283-A1B9-DDFC4F15A775}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Store.App.Model", "Store.App.Model\Store.App.Model.csproj", "{D1C419DE-E4A4-4283-A1B9-DDFC4F15A775}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataBaseTools", "DataBaseTools\DataBaseTools.csproj", "{E67FDFD8-9CA4-40A2-9310-22005F0B5553}"
 EndProject
