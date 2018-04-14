@@ -161,7 +161,7 @@ namespace Store.App.API.Controllers
             if (id == 0)
             {
                 //修改密码
-                var usr = _sysUserRpt.GetSingle(f => f.UserId == value.UserId);
+                var usr = _sysUserRpt.GetSingle(f => f.Id == value.Id);
                 if (usr != null)
                 {
                     usr.Pwd = value.Pwd;

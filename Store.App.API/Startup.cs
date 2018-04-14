@@ -163,12 +163,12 @@ namespace Store.App.API
                 //routes.MapWebApiRoute("DefaultApi", "api/{controller}/{id?}");
             });
 
-            app.UseStaticFiles(new StaticFileOptions()
-            {
-                FileProvider = new PhysicalFileProvider(
-                    Path.Combine(Directory.GetCurrentDirectory(), @"Files")),
-                RequestPath = new PathString("/Files")
-            });
+            //app.UseStaticFiles(new StaticFileOptions()
+            //{
+            //    FileProvider = new PhysicalFileProvider(
+            //        Path.Combine(Directory.GetCurrentDirectory(), @"Files")),
+            //    RequestPath = new PathString("/Files")
+            //});
         }
     }
 }
