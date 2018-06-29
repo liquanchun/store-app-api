@@ -44,9 +44,9 @@ namespace Store.App.API.Controllers
         public async Task<IActionResult> Get()
         {
             IEnumerable<SysUserDto> entityDto = null;
-            var users = _sysUserRpt.FindBy(f => f.IsDelete == false);
-            entityDto = _mapper.Map<IEnumerable<sys_user>, IEnumerable<SysUserDto>>(users);
-
+            var users = _sysUserRpt.FindBy(f => f.IsDelete == false).ToList();
+            entityDto = _mapper.Map<IEnumerable<sys_user>, IEnumerable<SysUserDto>>(users).ToList();
+            var sysRoleList = _sysRoleRpt.GetAll().ToList();
             var orgList = _orgRepository.GetAll().ToList();
             foreach (var item in entityDto)
             {
@@ -59,7 +59,7 @@ namespace Store.App.API.Controllers
                     {
                         if (!string.IsNullOrEmpty(roleid[i]))
                         {
-                            var role = _sysRoleRpt.GetSingle(int.Parse(roleid[i]));
+                            var role = sysRoleList.Find(f => f.Id == int.Parse(roleid[i]));
                             if (role != null)
                             {
                                 roleName.Add(role.RoleName);
@@ -180,17 +180,6 @@ namespace Store.App.API.Controllers
                         {
                             return NotFound();
                         }
-                        userDb.IsValid = value.IsValid;
-                        userDb.Mobile = value.Mobile;
-                        userDb.Tel = value.Tel;
-                        userDb.Works = value.Works;
-                        userDb.Title = value.Title;
-                        userDb.UserId = value.UserId;
-                        userDb.UserName = value.UserName;
-                        userDb.UpdatedAt = DateTime.Now;
-                        userDb.RoleIds = value.RoleIds;
-                        _sysUserRpt.Commit();
-
                         if (value.RoleIds != userDb.RoleIds)
                         {
                             //修改了用户角色
@@ -209,6 +198,16 @@ namespace Store.App.API.Controllers
                             }
                             _sysRoleUserRpt.Commit();
                         }
+                        userDb.IsValid = value.IsValid;
+                        userDb.Mobile = value.Mobile;
+                        userDb.Tel = value.Tel;
+                        userDb.Works = value.Works;
+                        userDb.Title = value.Title;
+                        userDb.UserId = value.UserId;
+                        userDb.UserName = value.UserName;
+                        userDb.UpdatedAt = DateTime.Now;
+                        userDb.RoleIds = value.RoleIds;
+                        _sysUserRpt.Commit();
                         tran.Commit();
                     }
                     catch (Exception ex)

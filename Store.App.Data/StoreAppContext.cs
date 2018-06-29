@@ -7,6 +7,7 @@ using Store.App.Model;
 using Store.App.Model.Account;
 using Store.App.Model.SYS;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Store.App.Model.Dto;
 using Store.App.Model.House;
 using Store.App.Model.Store;
 using Store.App.Model.Sale;
@@ -75,6 +76,7 @@ namespace Store.App.Data
         public DbSet<cw_invoice> CwInvoices { get; set; }
         public DbSet<cw_preauth> CwPreauths { get; set; }
         public DbSet<cw_prefee> CwPrefees { get; set; }
+        public DbSet<vw_storeout> vw_storeout { get; set; }
         public StoreAppContext(DbContextOptions options) : base(options)
         {
         }

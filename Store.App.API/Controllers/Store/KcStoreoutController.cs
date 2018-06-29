@@ -10,6 +10,8 @@ using AutoMapper;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Store.App.Data;
 using Store.App.Model.Dto;
 using Store.App.Model.SYS;
@@ -32,12 +34,14 @@ namespace Store.App.API.Controllers
         private readonly ISysDicRepository _sysDicRepository;
         private readonly ISysOrgRepository _sysOrgRepository;
         private readonly StoreAppContext _context;
+        private readonly ILogger<ValuesController> _logger;
         public KcStoreoutController(IKcStoreoutRepository kcStoreoutRpt, StoreAppContext context,
             IKcStoreRepository kcStoreRpt,
             ISysUserRepository sysUserRepository,
             ISysDicRepository sysDicRepository,
             ISysOrgRepository sysOrgRepository,
             IKcGoodsRepository kcGoodsRepository,
+            ILogger<ValuesController> logger,
         IKcStoreoutlistRepository kcStoreoutlistRepository, IMapper mapper)
         {
             _kcStoreoutRpt = kcStoreoutRpt;
@@ -49,7 +53,32 @@ namespace Store.App.API.Controllers
             _sysDicRepository = sysDicRepository;
             _sysOrgRepository = sysOrgRepository;
             _kcGoodsRepository = kcGoodsRepository;
+            _logger = logger;
         }
+
+        [HttpGet("report")]
+        public async Task<IActionResult> GetReport(QueryPara para)
+        {
+            _logger.LogInformation("参数：" + Newtonsoft.Json.JsonConvert.SerializeObject(para));
+            var storeoutList = new List<vw_storeout>();
+            if (!string.IsNullOrEmpty(para.StartDate))
+            {
+                storeoutList = _context.vw_storeout.Where(f => f.OutTime > DateTime.Parse(para.StartDate)
+                && f.OutTime < DateTime.Parse(para.EndDate)
+                && f.OrgId == int.Parse(para.SelectedOrg)
+                && f.Operator == int.Parse(para.Operator)).ToList();
+            }
+            else
+            {
+                storeoutList = _context.vw_storeout.ToList();
+            }
+            for (int i = 0; i < storeoutList.Count; i++)
+            {
+                storeoutList[i].Id = i + 1;
+            }
+            return new OkObjectResult(storeoutList);
+        }
+
         // GET: api/values
         [HttpGet]
         public async Task<IActionResult> Get()

@@ -91,7 +91,7 @@ namespace Store.App.API.Controllers
             {
                 return Get();
             }
-            var roleUser = _sysRoleUserRepository.FindBy(f => f.UserId == user.Id);
+            var roleUser = _sysRoleUserRepository.FindBy(f => f.UserId == user.Id).ToList();
             List<int> roleId = new List<int>();
             foreach (var ru in roleUser)
             {
