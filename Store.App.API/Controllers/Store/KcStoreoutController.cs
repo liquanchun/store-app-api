@@ -65,8 +65,11 @@ namespace Store.App.API.Controllers
             {
                 storeoutList = _context.vw_storeout.Where(f => f.OutTime > DateTime.Parse(para.StartDate)
                 && f.OutTime < DateTime.Parse(para.EndDate)
-                && f.OrgId == int.Parse(para.SelectedOrg)
-                && f.Operator == int.Parse(para.Operator)).ToList();
+                && f.OrgId == int.Parse(para.SelectedOrg)).ToList();
+                if (!string.IsNullOrEmpty(para.Operator))
+                {
+                    storeoutList = storeoutList.FindAll(f => f.Operator == int.Parse(para.Operator));
+                }
             }
             else
             {
