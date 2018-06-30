@@ -42,11 +42,16 @@ namespace Store.App.API.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-		    IEnumerable<kc_store> entityDto = null;
-            await Task.Run(() =>
+            return new OkObjectResult(GetByStore(0));
+        }
+
+        public List<StoreDto> GetByStore(int storeId)
+        {
+            IEnumerable<kc_store> entityDto = _kcStoreRpt.FindBy(f => f.IsValid);
+            if(storeId > 0)
             {
-				entityDto = _kcStoreRpt.FindBy(f => f.IsValid);
-			});
+                entityDto = _kcStoreRpt.FindBy(f => f.IsValid && f.StoreId == storeId);
+            }
             var storeDtoList = _mapper.Map<IEnumerable<kc_store>, IEnumerable<StoreDto>>(entityDto).ToList();
 
             var kcGoodsList = _kcGoodsRepository.GetAll();
@@ -61,19 +66,21 @@ namespace Store.App.API.Controllers
             {
                 store.GoodsTypeIdTxt = sysDics.FirstOrDefault(f => f.Id == store.GoodsTypeId)?.DicName;
                 store.StoreIdTxt = sysDics.FirstOrDefault(f => f.Id == store.StoreId)?.DicName;
-                store.GoodsIdTxt = kcGoodses.FirstOrDefault(f => f.Id == store.GoodsId)?.Name;
-                store.GoodsCode = kcGoodses.FirstOrDefault(f => f.Id == store.GoodsId)?.GoodsCode;
-                store.GoodsNo = kcGoodses.FirstOrDefault(f => f.Id == store.GoodsId)?.GoodsNo;
+
+                var gd = kcGoodses.FirstOrDefault(f => f.Id == store.GoodsId);
+                store.GoodsIdTxt = gd?.Name;
+                store.GoodsCode = gd?.GoodsCode;
+                store.GoodsNo = gd?.GoodsNo;
+                store.Unit = gd?.Unit;
                 store.OrgTxt = sysOrgs.FirstOrDefault(f => f.Id == store.OrgId)?.DeptName;
             }
-            return new OkObjectResult(storeDtoList);
+            return storeDtoList;
         }
         // GET api/values/5
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
-            var single = _kcStoreRpt.GetSingle(id);
-            return new OkObjectResult(single);
+            return new OkObjectResult(GetByStore(id));
         }
 
         // POST api/values
