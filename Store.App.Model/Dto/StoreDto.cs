@@ -39,6 +39,11 @@ namespace Store.App.Model.Dto
         ///数量
         ///</summary>
         public decimal Number { get; set; }
+
+        ///<summary>
+        ///价格
+        ///</summary>
+        public decimal? Price { get; set; }
         ///<summary>
         ///
         ///</summary>

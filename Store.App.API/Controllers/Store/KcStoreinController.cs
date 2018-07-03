@@ -213,6 +213,10 @@ namespace Store.App.API.Controllers
                         _kcStoreinRpt.Commit();
                         foreach (var store in value.StoreinList)
                         {
+                            if(_kcStoreinlistRpt.Exist(f => f.batchno == store.batchno && f.GoodsId == store.GoodsId))
+                            {
+                                throw new Exception($"批次号{store.batchno}，产品ID{store.goodscode}已经存在");
+                            }
                             //入库明细
                             store.orderno = storeIn.OrderNo;
                             _kcStoreinlistRpt.Add(store);

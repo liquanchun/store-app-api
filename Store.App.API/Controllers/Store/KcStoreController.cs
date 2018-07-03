@@ -26,10 +26,12 @@ namespace Store.App.API.Controllers
         private readonly IKcGoodsRepository _kcGoodsRepository;
         private readonly ISysDicRepository _sysDicRepository;
         private readonly ISysOrgRepository _sysOrgRepository;
+        private readonly IKcStoreinlistRepository _kcStoreinlistRepository;
         public KcStoreController(IKcStoreRepository kcStoreRpt,
             ISysDicRepository sysDicRepository,
             IKcGoodsRepository kcGoodsRepository,
             ISysOrgRepository sysOrgRepository,
+            IKcStoreinlistRepository kcStoreinlistRepository,
                 IMapper mapper)
         {
             _kcStoreRpt = kcStoreRpt;
@@ -37,6 +39,7 @@ namespace Store.App.API.Controllers
             _sysDicRepository = sysDicRepository;
             _kcGoodsRepository = kcGoodsRepository;
             _sysOrgRepository = sysOrgRepository;
+            _kcStoreinlistRepository = kcStoreinlistRepository;
         }
         // GET: api/values
         [HttpGet]
@@ -47,20 +50,22 @@ namespace Store.App.API.Controllers
 
         public List<StoreDto> GetByStore(int storeId)
         {
-            IEnumerable<kc_store> entityDto = _kcStoreRpt.FindBy(f => f.IsValid);
+            IEnumerable<kc_store> entityDto = _kcStoreRpt.FindBy(f => f.IsValid && f.Number > 0);
             if(storeId > 0)
             {
-                entityDto = _kcStoreRpt.FindBy(f => f.IsValid && f.StoreId == storeId);
+                entityDto = _kcStoreRpt.FindBy(f => f.IsValid && f.StoreId == storeId && f.Number > 0);
             }
             var storeDtoList = _mapper.Map<IEnumerable<kc_store>, IEnumerable<StoreDto>>(entityDto).ToList();
 
             var kcGoodsList = _kcGoodsRepository.GetAll();
             var sysDicList = _sysDicRepository.GetAll();
             var sysOrgList = _sysOrgRepository.GetAll();
+            var storeinList = _kcStoreinlistRepository.GetAll();
 
             var sysDics = sysDicList as sys_dic[] ?? sysDicList.ToArray();
             var kcGoodses = kcGoodsList as kc_goods[] ?? kcGoodsList.ToArray();
             var sysOrgs = sysOrgList as sys_org[] ?? sysOrgList.ToArray();
+            var storeins = storeinList as kc_storeinlist[] ?? storeinList.ToArray();
 
             foreach (var store in storeDtoList)
             {
@@ -72,6 +77,11 @@ namespace Store.App.API.Controllers
                 store.GoodsCode = gd?.GoodsCode;
                 store.GoodsNo = gd?.GoodsNo;
                 store.Unit = gd?.Unit;
+                store.Price = storeins.FirstOrDefault(f => f.GoodsId == store.GoodsId && f.batchno == store.BatchNo)?.price;
+                if(store.Price == null || store.Price <=0)
+                {
+                    store.Price = gd?.Price;
+                }
                 store.OrgTxt = sysOrgs.FirstOrDefault(f => f.Id == store.OrgId)?.DeptName;
             }
             return storeDtoList;
