@@ -31,6 +31,8 @@ namespace Store.App.Model.Dto
         public string GoodsTypeIdTxt { get; set; }
 
         public string Unit { get; set; }
+
+        public string GoodsBrand { get; set; }
         ///<summary>
         ///金额
         ///</summary>

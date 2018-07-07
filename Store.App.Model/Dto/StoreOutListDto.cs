@@ -20,6 +20,11 @@ namespace Store.App.Model.Dto
         public int GoodsTypeId { get; set; }
 
         public string GoodsTypeIdTxt { get; set; }
+
+
+        public string GoodsBrand { get; set; }
+
+        public string unit { get; set; }
         ///<summary>
         ///
         ///</summary>

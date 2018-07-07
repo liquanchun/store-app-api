@@ -114,7 +114,7 @@ namespace Store.App.API.Controllers
             {
                 return NotFound();
             }
-            ObjectCopy.Copy<kc_goods>(single, value, new string[] { "name","typeId", "unit", "goodsCode", "minAmount", "remark", "goodsNo", "price" });
+            ObjectCopy.Copy<kc_goods>(single, value, new string[] { "name","typeId", "unit", "goodsCode", "minAmount", "remark", "goodsNo", "price", "GoodsBrand" });
             //更新字段内容
             single.UpdatedAt = DateTime.Now;
             if(User.Identity is ClaimsIdentity identity)

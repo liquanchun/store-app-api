@@ -24,6 +24,10 @@ namespace Store.App.Model.Dto
         ///
         ///</summary>
         public decimal number { get; set; }
+
+        public string unit { get; set; }
+
+        public string GoodsBrand { get; set; }
         ///<summary>
         ///
         ///</summary>

@@ -90,6 +90,8 @@ namespace Store.App.API.Controllers
             foreach (var strdetail in storeinDetailDtoList)
             {
                 strdetail.GoodsIdTxt = kcGoodses.FirstOrDefault(f => f.Id == strdetail.GoodsId)?.Name;
+                strdetail.unit = kcGoodses.FirstOrDefault(f => f.Id == strdetail.GoodsId)?.Unit;
+                strdetail.GoodsBrand = kcGoodses.FirstOrDefault(f => f.Id == strdetail.GoodsId)?.GoodsBrand;
                 strdetail.GoodsTypeIdTxt = sysDics.FirstOrDefault(f => f.Id == strdetail.GoodsTypeId)?.DicName;
             }
             return new OkObjectResult(new StoreInAllDto(){  StoreInList = storeinDtoList , StoreInDetailList = storeinDetailDtoList });

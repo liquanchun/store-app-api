@@ -77,6 +77,7 @@ namespace Store.App.API.Controllers
                 store.GoodsCode = gd?.GoodsCode;
                 store.GoodsNo = gd?.GoodsNo;
                 store.Unit = gd?.Unit;
+                store.GoodsBrand = gd?.GoodsBrand;
                 store.Price = storeins.FirstOrDefault(f => f.GoodsId == store.GoodsId && f.batchno == store.BatchNo)?.price;
                 if(store.Price == null || store.Price <=0)
                 {
