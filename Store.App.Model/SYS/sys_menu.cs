@@ -51,5 +51,7 @@ namespace Store.App.Model.SYS
       ///
       ///</summary>
       public string CreatedBy { get; set; }
+
+      public string FormName { get; set; }
    }
 }

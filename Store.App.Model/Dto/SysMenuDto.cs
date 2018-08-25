@@ -39,6 +39,7 @@ namespace Store.App.Model.SYS
         public bool IsValid { get; set; }
         public string CreatedBy { get; set; }
 
+        public string FormName { get; set; }
     }
 }
 
