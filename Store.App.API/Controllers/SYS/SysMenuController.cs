@@ -214,6 +214,7 @@ namespace Store.App.API.Controllers
             menuDb.MenuAddr = value.MenuAddr;
             menuDb.Icon = value.Icon;
             menuDb.UpdatedAt = DateTime.Now;
+            menuDb.FormName = value.FormName;
             menuDb.IsValid = true;
             using (var tran = _context.Database.BeginTransaction())
             {
