@@ -56,7 +56,7 @@ namespace Store.App.API.Controllers
         }
         // POST api/values
         [HttpPost("cashorder")]
-        public IActionResult CreateCashFile([FromBody]Paras paras)
+        public Paras CreateCashFile([FromBody]Paras paras)
         {
             string webRootPath = _hostingEnvironment.WebRootPath;
             var addrUrl = webRootPath + $@"\temp\{paras.FileName}";
@@ -177,11 +177,11 @@ namespace Store.App.API.Controllers
                 book.Write(fs);
             }
             book = null;
-            return Ok();
+            return paras;
         }
         // POST api/values
         [HttpPost("saleorder")]
-        public IActionResult CreateSaleFile([FromBody]Paras paras)
+        public Paras CreateSaleFile([FromBody]Paras paras)
         {
             string webRootPath = _hostingEnvironment.WebRootPath;
             var addrUrl = webRootPath + $@"\temp\{paras.FileName}";
@@ -309,7 +309,7 @@ namespace Store.App.API.Controllers
                 book.Write(fs);
             }
             book = null;
-            return Ok();
+            return paras;
         }
         // POST api/values
         [HttpGet("getfile/{filename}")]
