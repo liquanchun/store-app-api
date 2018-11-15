@@ -77,6 +77,9 @@ namespace Store.App.Data
         public DbSet<cw_preauth> CwPreauths { get; set; }
         public DbSet<cw_prefee> CwPrefees { get; set; }
         public DbSet<vw_storeout> vw_storeout { get; set; }
+
+        public DbSet<SaleBill> SaleBills { get; set; }
+        public DbSet<CashBill> CashBills { get; set; }
         public StoreAppContext(DbContextOptions options) : base(options)
         {
         }

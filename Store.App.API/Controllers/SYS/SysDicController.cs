@@ -39,7 +39,7 @@ namespace Store.App.API.Controllers
         [HttpPost]
         public IActionResult Post([FromBody]sys_dic value)
         {
-            var oldSysDic = _sysDicRpt.FindBy(f => f.DicName == value.DicName);
+            var oldSysDic = _sysDicRpt.FindBy(f => f.DicName == value.DicName && f.ParentId == value.ParentId && f.IsValid);
             if(oldSysDic.Any())
             {
                 return BadRequest(string.Concat(value.DicName, "已经存在。"));
